@@ -198,6 +198,11 @@ exclude:
   - /test
   - /vendor
 
+
+collections:
+  docs:
+    output: true
+
 defaults:
   - scope:
       path: ""
@@ -215,7 +220,7 @@ defaults:
       layout: article
       nav_key: docs
       sidebar:
-        nav: docs-zh
+        nav: docs
       license: true
       aside:
         toc: true
