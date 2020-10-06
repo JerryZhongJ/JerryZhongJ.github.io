@@ -2,8 +2,17 @@ header:
   - title:      Home
     url:        /
   - title:      Docs
-    url:        /docs
+    url:        /docs/words-before
     key:        docs
   - title:      Archive
     url:        /archive.html
 
+docs:
+  - title: 导航栏
+    children:
+      - title: Git
+        url: /docs/Git
+      - title: Linux
+        url: /docs/Linus
+      - title: Latex
+        url: /docs/Latex
