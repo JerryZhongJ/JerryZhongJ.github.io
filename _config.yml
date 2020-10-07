@@ -210,6 +210,11 @@ defaults:
       type: posts
     values:
       layout: article
+      mode: immersive
+     # header:
+      #  type: translucent
+      article_header:
+        type: cover
       license: true
       aside:
         toc: true
