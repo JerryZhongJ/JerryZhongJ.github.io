@@ -197,6 +197,8 @@ exclude:
   - /screenshots
   - /test
   - /vendor
+  - .jekyll-metadata
+  - .jekyll-cache/
 
 
 collections:
