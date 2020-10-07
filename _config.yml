@@ -19,7 +19,7 @@
 text_skin: ocean # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
 highlight_theme: tomorrow # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
 url     : https://jerryzhongj.github.io # the base hostname & protocol for your site e.g. https://www.someone.com
-baseurl : ""# does not include hostname
+baseurl : "/" # does not include hostname
 title   : JerryZhong's Zone
 description: > # this means to ignore newlines until "Language & timezone"
   Private space for JerryZhong, nothing interesting here.
@@ -192,7 +192,7 @@ exclude:
   - jekyll-text-theme.gemspec
   - package-lock.json
   - package.json
-  - /docs
+  - /ref
   - /node_modules
   - /screenshots
   - /test
