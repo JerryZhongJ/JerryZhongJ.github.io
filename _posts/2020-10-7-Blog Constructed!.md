@@ -1,11 +1,11 @@
 ---
 title: 博客建成!
-cover: /assets/cover/IMG_4319.PNG
+cover: https://raw.githubusercontent.com/JerryZhongJ/Pics/master/IMG_4319.PNG
 header:
     theme: light
 article_header:
     image:
-        src: /assets/cover/IMG_4319.PNG
+        src: https://raw.githubusercontent.com/JerryZhongJ/Pics/master/IMG_4319.PNG
 tags: ["博客", "github pages", "jekyll", "Ruby"] 
 ---
 今天, 我的github pages博客历时三天, 终于成型. 大概的样式已经确定, 可能还会有有些小修小补, 以及, 我还要推出一个图集板块, 用于展示一些二次元的美图, (还要研究一下怎么给图片打标签).
@@ -70,9 +70,9 @@ github pages默认使用jekyll作为SSG来build内容. 若不想使用jekyll, �
 ### 认识jekyll
 github pages的默认主题太丑了, 我决定找其他好看的主题. 因此我跟着tutorial来安装jeykll和 ruby, bundler等, 并在源文件夹用jekyll new了一个. 我把theme设为了一个外面找到的一个模板. 在这里花了我一个晚上, 主要是: windows安装ruby有问题, 不知道bundler和gem是啥. 在设置gemfile时, 我看漏了tutorial的一个步骤, 花了很长时间.
 
-后来我对这个theme不满意, 又在github找到了一个主题. 然后故伎重演进行配置, 但无论怎么配置, 效果都不理想, 完全没法复原demo的样子. 这时我才发现remote theme compatible的问题.
+后来我对这个theme不满意, 又在github找到了一个主题. 然后故伎重演进行配置, 但无论怎么配置, 效果都不理想, 完全没法复原demo的样子. 这时我才发现remote theme compatible的问题. 
 
-(未完待续)
+最后, 我才决定直接fork github上的主题, 直接对它进行个性化.
 
 #### Ruby Gem Bundler
 Gem是ruby的一个包管理器,类似于 Ubuntu 下的apt-get, Centos 的 yum，Python 的 pip.[^gem]
