@@ -5,40 +5,40 @@ title: Git
 
 ## 基本操作
 
-**git init** 新建仓库
+`git init`: 新建仓库
 
-**git add** 添加到暂存区
+`git add`: 添加到暂存区
 
-**git commit [-a] -m** 提交到仓库, -a 跳过git add, 自动提交**已经跟踪**的文件. [^basic]
+`git commit -m`: 提交到仓库; 
+- `-a`: 跳过git add, 自动提交**已经跟踪**的文件. [^basic]
 
-**git rm <file> [-cached]** 从版本库, 工作目录中删除文件.
-*****
-关于文件的删除有一点很狗. 当删除了文件后, 使用**git add**是不能把这个改动添加进去的, 因为此时文件夹中不包含已删除的文件, 即*不包括已删除的文件. 因此, 需要显示的写出已删除的文件名, 并把它add进去. 否则, 删除文件始终是not staged的状态.
+`git rm <file>`: 从版本库, 工作目录中删除文件; 
+- `-cached`: 保留workspace的文件.
+- 关于文件的删除有一点很狗. 当删除了文件后, 使用*git add*是不能把这个改动添加进去的, 因为此时文件夹中不包含已删除的文件, 即*不包括已删除的文件. 因此, 需要显示的写出已删除的文件名, 并把它add进去. 否则, 删除文件始终是not staged的状态.  
+或者, 简单点, 用*commit -am*可以自动提交已跟踪的文件, 也可以成功删除.  
+要不然, 一开始就是用*git rm*来删除.
 
-或者, 简单点, 用**commit -a**可以自动提交已跟踪的文件, 也可以成功删除.
 
-要不然, 一开始就是用**git rm**来删除.
-*****
+`git status`: 查看状态;  
+- `-s --short`: 简略信息
 
-**git status [-s --short]** 查看状态 , -s --short 简略信息
-
-**git log** 查看提交日志 
+`git log`: 查看提交日志 
 
 ## gitignore
 
 用于指导跟踪什么文件, 对于已跟踪的文件无效.
 
-**\#xxx** 添加注释
+`\#xxx`: 添加注释
 
-**!xxxx**重新包含匹配的文件, 但若是该文件的目录被排除了, 那就没法重新包含
+`!xxxx`: 重新包含匹配的文件, 但若是该文件的目录被排除了, 那就没法重新包含
 
-**/xx, xx/xx/** 相对路径, 只在.gitignore所在目录那一层找. (默认是递归查找匹配的)
+`/xx, xx/xx/`: 相对路径, 只在.gitignore所在目录那一层找. (默认是递归查找匹配的)
 
-**xx/** 限定目录文件, 否则将查找普通文件和目录文件, 递归查找匹配
+`xx/`: 限定目录文件, 否则将查找普通文件和目录文件, 递归查找匹配
 
-**\*, ?, []** 通配符, 但只用于表示文件名, 即不能替代'/'符号, 以表示文件路径.
+`\*, ?, []`: 通配符, 但只用于表示文件名, 即不能替代'/'符号, 以表示文件路径.
 
-**\*\*** 通配符, 表示文件路径
+`\*\*`: 通配符, 表示文件路径
 
 
 
@@ -64,27 +64,27 @@ title: Git
 >
 > Git 用以计算校验和的机制叫做 SHA-1 散列（hash，哈希）
 
-### 关于 workplace， index，和repository
+### 关于 workspace， index，和repository
 
-index，暂存区，但不是存放临时的修改的！
+index: 暂存区，但不是存放临时的修改的！
 
-需要这么理解，一份文件具有三个镜像，分别在workplace，index，repository。
+需要这么理解，一份文件具有三个镜像，分别在workspace，index，repository。
 
-因此，当你commit之后，但没有add，那么此时暂存区空空如也？不是！暂存区可以理解为**有一个完整的文件镜像**，且这个镜像和repository中的HEAD一毛一样。因此使用checkout -- file之后可以将暂存区的镜像cover workplace中的镜像。
+因此，当你commit之后，但没有add，那么此时暂存区空空如也？不是！暂存区可以理解为**有一个完整的文件镜像**，且这个镜像和repository中的HEAD一毛一样。因此使用checkout -- file之后可以将暂存区的镜像cover workspace中的镜像。
 
-同理，在commit之后没有add，使用reset [commit] --mixed时，暂存区会被commit cover。假如将暂存区理解为记录了临时的修改，那么暂存区理应是空的，就很难理解被commit 覆盖是怎么一回事。[^tree]
+同理，在`commit`之后没有`add`，使用`reset [commit] --mixed`时，暂存区会被commit cover。假如将暂存区理解为记录了临时的修改，那么暂存区理应是空的，就很难理解被commit 覆盖是怎么一回事。[^tree]
 
 ## 版本回退
 
 ### reset 和 checkout（用于撤销）
 
-**reset [commit] [file]**: commit是版本号, 缺省为HEAD. file是重置某个文件, 缺省代表对重置整个workplace或index. 有三个模式 --soft --mixed(缺省) --hard，都是将commit所指的版本覆盖其他地方，且HEAD指针都会移动到commit。不同之处在于覆盖谁，--soft是只改变HEAD，--mixed会覆盖index，--hard会覆盖index和workplace。
+`reset [commit] [file]`: commit是版本号, 缺省为HEAD. file是重置某个文件, 缺省代表对重置整个workspace或index. 有三个模式 *--soft*, *--mixed*(缺省), *--hard*，都是将commit所指的版本覆盖其他地方，且HEAD指针都会移动到commit。不同之处在于覆盖谁，*--soft*是只改变HEAD，*--mixed*会覆盖index，*--hard*会覆盖index和workspace。
 
-reset 可以针对某个file使用，不需要加 "--",[^reset]
+`reset`可以针对某个file使用，不需要加 `--`.[^reset]
 
-**checkout [commit] -- file**, 与reset --hard类似. 但是commit可以省略，此时表示用index 覆盖 workplace（考虑commit未add，然后reset --mixed的情况，需要正确理解index的含义）。若指定commit 则覆盖index 和 workplace[^checkout]'
+`checkout [commit] -- file`: 与*reset --hard*类似. 但是commit可以省略，此时表示用index 覆盖 workspace（考虑*commit*未*add*，然后*reset --mixed*的情况，需要正确理解index的含义）。若指定commit 则覆盖index 和 workspace[^checkout]'
 
-在回退时, HEAD表示当前的仓库版本, HEAD^指上一个版本, HEAD^^上上个 ..., HEAD~n往上n个
+在回退时, *HEAD*表示当前的仓库版本, *HEAD^*指上一个版本, *HEAD^^*上上个 ..., *HEAD~n*往上n个
 
 最好使用commit id 
 
@@ -96,23 +96,23 @@ HEAD只有**一个**, 指向当前分支的最新版本.
 
 ### 基本操作 [^branch]
 
-**git branch \<branch\>** 分支创建
+`git branch \<branch\>`: 分支创建
 
 ​	注意: 并**不会切换**到新分支
 
-**git checkout \<branch\>** 分支切换
+`git checkout \<branch\>`: 分支切换
 
-​	注意:  执行前需要保持workplace和index干净, 清空或commit; 切换后, workplace会被重置成目标分支的最后提交.
+- 注意:  执行前需要保持workspace和index干净, 清空或commit; 切换后, workspace会被重置成目标分支的最后提交.
 
-**git checkout -b \<branch\>** 分支创建同时切换
+`git checkout -b \<branch\>`: 分支创建同时切换
 
-**git log --oneline --decorate --graph --all** 查看分支
+`git log --oneline --decorate --graph --all`: 查看分支
 
-**git branch -d \<branch\>** 分支删除
+`git branch -d \<branch\>`: 分支删除
 
 #### 分支合并 [^merge]
 
-**git merge \<branch\>** 将branch合并入当前所在的分支, 新产生的快照属于当前分支.
+`git merge \<branch\>`: 将branch合并入当前所在的分支, 新产生的快照属于当前分支.
 
 若两个分支只是简单的祖先/子孙关系, 那么只会将其中一个分支指针前移, 此之谓fast-forward.
 
@@ -136,19 +136,18 @@ HEAD只有**一个**, 指向当前分支的最新版本.
 
 ### 基本操作
 
-**git tag [-l | --list \<expression\>]** 查看 , -l --list 可选, 使用正则表达式
+`git tag`: 查看;
+- `-l | --list \<expression\>`: 使用正则表达式
 
-**git tag \<tag\> [commit]** 轻量标签, commit缺省, 默认HEAD
+`git tag \<tag\> [commit]`: 轻量标签, commit缺省, 默认HEAD
 
-**git tag -d \<tag\>** 删除
+`git tag -d \<tag\>`: 删除
 
 ### 推送到远程
 
 默认的git push不会将标签推送到远程服务器, 需要显示地推送, 像推送branch一样
 
-**git push \<name\> \<tag\>**
-
-使用 **--tags** 将远程服务器没有的标签全部推送过去
+`git push \<name\> \<tag\>`: 使用 *--tags* 将远程服务器没有的标签全部推送过去
 
 
 
@@ -164,7 +163,7 @@ HEAD只有**一个**, 指向当前分支的最新版本.
 
 ### 基本操作
 
-**git remote [-v]**: 查看远程仓库, -v 显示地址
+`git remote [-v]`: 查看远程仓库, -v 显示地址
 
 #### URL
 
@@ -182,17 +181,17 @@ SSH: ssh://[user@]server/project.git 或 [user@]server:project.git
 
 需要先在服务器上新建一个仓库, 然后在本地关联它.
 
-**git remote add \<name\> url**
+`git remote add \<name\> url`
 
 远程地址也有https:// 但每次推送都需要输入口令, 而git://使用ssh
 
 #### 创建 远程 -> 本地
 
-**git clone url** (默认叫origin
+`git clone url` (默认叫origin
 
 #### SSH Key
 
-生成: ssh-keygen -t rsa -C "email@example.com" (一路回车
+生成: *ssh-keygen -t rsa -C "email@example.com"* (一路回车
 
 公钥, 私钥存储在: ~/.ssh/
 
@@ -204,35 +203,27 @@ git push <远程主机名> <本地分支名>:<远程分支名>
 
 **注意**: 因此本地分支名不一定与远程分支名相同.
 
-**git push origin master** 
+`git push origin master`: 如果远程分支被省略，如上则表示将本地分支推送到与之存在追踪关系的远程分支（通常两者同名），如果该远程分支不存在，则会被新建
 
-如果远程分支被省略，如上则表示将本地分支推送到与之存在追踪关系的远程分支（通常两者同名），如果该远程分支不存在，则会被新建
+`git push origin ：master`: 如果省略本地分支名，则表示删除指定的远程分支，因为这等同于推送一个空的本地分支到远程分支，等同于 *git push origin --delete master*
 
-**git push origin ：master** 
+`git push origin`: 如果当前分支与远程分支存在追踪关系，则本地分支和远程分支都可以省略，将当前分支推送到origin主机的对应分支
 
-如果省略本地分支名，则表示删除指定的远程分支，因为这等同于推送一个空的本地分支到远程分支，等同于 **git push origin --delete master**
-
-**git push origin**
-
-如果当前分支与远程分支存在追踪关系，则本地分支和远程分支都可以省略，将当前分支推送到origin主机的对应分支
-
-**git push**
-
-如果当前分支只有一个远程分支，那么主机名都可以省略
+`git push`: 如果当前分支只有一个远程分支，那么主机名都可以省略
 
 ### 远程分支
 
-远程分支引用是远程仓库的分支的位置, 但不是实时更新的, 需要与远程仓库通信后, push 或 pull fetch, 才更新. 名字为 \<remote\>/\<branch>
+远程分支引用是远程仓库的分支的位置, 但不是实时更新的, 需要与远程仓库通信后, push 或 pull fetch, 才更新. 名字为 `\<remote\>/\<branch>`
 
-pull / fetch 后, 远程分支与本地分支指向同一个地方. 经过几次commit后, 本地分支前进了几步, 但远程分支保持不动. 若远程仓库的分支有人提交了, 而本地又做了修改, 那么fetch后远程分支将与本地分支岔开.
+*pull* / *fetch* 后, 远程分支与本地分支指向同一个地方. 经过几次commit后, 本地分支前进了几步, 但远程分支保持不动. 若远程仓库的分支有人提交了, 而本地又做了修改, 那么fetch后远程分支将与本地分支岔开.
 
 <img src="/assets/posts_ref/remote-branches-3.png" alt="`git fetch` 更新你的远程仓库引用。" style="zoom:67%;" />
 
 > 要特别注意的一点是当抓取到新的远程跟踪分支时，本地不会自动生成一份可编辑的副本（拷贝）。 换一句话说，这种情况下，不会有一个新的 `serverfix` 分支——只有一个不可以修改的 `origin/serverfix` 指针。
 
-即远程分支只是一个引用, 并不是真的副本. 要想访问修改, 就将远程分支与本地分支合并, **git merge \<remote\>/\<branch>**. 也可以一开始用pull拉取, git pull = git fetch + git merge.
+即远程分支只是一个引用, 并不是真的副本. 要想访问修改, 就将远程分支与本地分支合并, *git merge \<remote\>/\<branch>*. 也可以一开始用pull拉取, git pull = git fetch + git merge.
 
-若本地没有相应的分支, 则用远程分支创建一个新的 ,**checkout -b \<branch\>  \<remote\>/\<branch>**
+若本地没有相应的分支, 则用远程分支创建一个新的 ,`checkout -b \<branch\>  \<remote\>/\<branch>`
 
 
 
