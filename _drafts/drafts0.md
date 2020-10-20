@@ -45,8 +45,7 @@ make默认执行第一个target, 这被叫做*default goal*
 
 因此, 当文件名众多, 且常常一起出现, 就用变量来代替, 如:
 ```
-objects = main.o kbd.o command.o display.o \
-          insert.o search.o files.o utils.o
+objects = main.o kbd.o command.o display.o insert.o search.o files.o utils.o
 ```
 而引用该变量, 用 _$(variable)_, 如 _$(objects)_
 
