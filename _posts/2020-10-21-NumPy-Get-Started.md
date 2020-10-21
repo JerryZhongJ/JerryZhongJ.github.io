@@ -2,10 +2,10 @@
 title: 认识NumPy
 cover: https://raw.githubusercontent.com/JerryZhongJ/Pics/master/IMG_4354.JPG
 header:
-	theme: dark
+    theme: dark
 article_header:
-	image:
-		src: https://raw.githubusercontent.com/JerryZhongJ/Pics/master/IMG_4354.JPG
+    image:
+        src: https://raw.githubusercontent.com/JerryZhongJ/Pics/master/IMG_4354.JPG
 tags: ["NumPy"]
 ---
 
