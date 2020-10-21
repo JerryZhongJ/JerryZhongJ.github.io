@@ -6,7 +6,7 @@ header:
 article_header:
     image:
         src: https://raw.githubusercontent.com/JerryZhongJ/Pics/master/IMG_4319.PNG
-tags: ["博客", "github pages", "jekyll", "Ruby"] 
+tags: ["博客", "GitHub Pages", "jekyll", "Ruby"] 
 ---
 今天, 我的github pages博客历时三天, 终于成型. 大概的样式已经确定, 可能还会有有些小修小补, 以及, 我还要推出一个图集板块, 用于展示一些二次元的美图, (还要研究一下怎么给图片打标签).
 
