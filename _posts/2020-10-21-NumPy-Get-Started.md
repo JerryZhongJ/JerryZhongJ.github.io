@@ -2,7 +2,7 @@
 title: 认识NumPy
 cover: https://raw.githubusercontent.com/JerryZhongJ/Pics/master/IMG_4354.JPG
 header:
-	theme:
+	theme: dark
 article_header:
 	image:
 		src: https://raw.githubusercontent.com/JerryZhongJ/Pics/master/IMG_4354.JPG
