@@ -10,6 +10,9 @@ tags: ["NumPy"]
 ---
 
 ## 基础
+[^basic]
+
+[^basic]: <https://www.numpy.org.cn/user/quickstart.html#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86>
 
 NumPy的主要对象是多维数组`ndarray`, 里面的元素类型相同 (这一点与Python内置的`list`不同, list可以同时存储不同的类型. 与Python内置的类库`array.array`类似, 但后者只能表示一维数组).
 

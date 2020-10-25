@@ -32,7 +32,7 @@
 
     {%- if _article.cover -%}
       {%- include snippets/get-nav-url.html path=_article.cover -%}
-      {%- assign _article_cover = __return -%}
+      {%- assign _article_cover = "https://cdn.jsdelivr.net/gh/JerryZhongJ/Pics/"|append: __return -%}
     {%- endif -%}
 
     {%- if include.type == 'item' -%}
@@ -43,7 +43,7 @@
       {%- endif -%}
         {%- if _article.cover and include.show_cover-%}
           {%- include snippets/get-nav-url.html path=_article.cover -%}
-          {%- assign _article_cover = __return -%}
+          {%- assign _article_cover = "https://cdn.jsdelivr.net/gh/JerryZhongJ/Pics/"|append: __return -%}
           <div class="item__image">
           {%- if include.cover_size == 'lg' -%}
             <img class="image image--lg" src="{{ _article_cover }}" />
