@@ -92,9 +92,9 @@ layout: base
             {%- assign _article_header_theme = page.article_header.theme | default: layout.article_header.theme | default: site.data.variables.default.page.article_header.theme -%}
 
             {%- if page.article_header.background_image.src -%}
-              {%- assign _header_background_image_src = "https://cdn.jsdelivr.net/gh/JerryZhongJ/Pics/"|append: page.article_header.background_image.src -%}
+              {%- assign _header_background_image_src = page.article_header.background_image.src | prepend: site.pic_src-%}
             {%- elsif page.article_header.background_image != false and page.cover -%}
-              {%- assign _header_background_image_src = "https://cdn.jsdelivr.net/gh/JerryZhongJ/Pics/"|append: page.cover -%}
+              {%- assign _header_background_image_src =  page.cover | prepend: site.pic_src-%}
             {%- endif -%}
 
             {%- if page.article_header.background_image.gradient -%}
@@ -170,7 +170,7 @@ layout: base
           {%- elsif _article_header_type == 'cover' -%}
             {%- if page.article_header.image.src -%}
               {%- include snippets/get-nav-url.html path=page.article_header.image.src -%}
-              {%- assign _header_image_src = "https://cdn.jsdelivr.net/gh/JerryZhongJ/Pics/"|append: __return -%}
+              {%- assign _header_image_src =  __return | prepend: site:pic_src -%}
               <img class="article__header--cover" src="{{ _header_image_src }}" />
             {%- endif -%}
           {%- endif -%}
