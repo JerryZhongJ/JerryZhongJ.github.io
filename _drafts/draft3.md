@@ -293,7 +293,182 @@ LaTex自带了两个浮动**环境**: `figure`和`table`, 两者里面都可以�
 
 使用`\lstinputlisting[language=..., linerange={from - to, ...}]{file}`从外面导入源代码.
 #### 伪代码
-有4个包提供了伪代码的排版, 分别是: `algorithmic`, `algorithm2e`, `algorithmicx`, `program`.
+[^algorithm]
+
+[^algorithm]:<https://en.wikibooks.org/wiki/LaTeX/Algorithms>; <https://tex.stackexchange.com/questions/229355/algorithm-algorithmic-algorithmicx-algorithm2e-algpseudocode-confused>
+
+有4个包提供了伪代码的排版, 分别是: 
+- `algorithmic`: 只能使用预定义的命令, 且命令是大写的, 格式如下
+- `algorithmicx`: 不提供任何命令, 但可以自定义命令, 或者使用第三方的命令集. 原话如下:
+  > The packagealgorithmicxitself doesn’t define any algorithmic commands,but gives a set of macros to define such a command set.  You may use onlyalgorithmicx, and define the commands yourself, or you may use one of thepredefined command sets.  
+  These predefined command sets (layouts) are:  
+  **algpseudocode** has the same look1as the one defined in thealgorithmicpackage.  
+  **algcompatible** is fully compatible with thealgorithmicpackage, it shouldbe used only in old documents. [^algorithmicx]
+
+  [^algorithmicx]: <http://mirror.ox.ac.uk/sites/ctan.org/macros/latex/contrib/algorithmicx/algorithmicx.pdf>
+
+- `algorithm2e`: 提供浮动体
+- `program`: 以数学模式排版, 不提供浮动体, 但是会编号.
+
+
+
+另外, 还有两个宏包:
+`algorithm`: 提供了`algorithm`环境, 用来给`alogrithmic`和`algorithmicx`提供浮动体.
+`algpseudocode`: `algorithmicx`的指令集, 风格类似与`algorithmic`.
+
+使用方法:
+##### algorithmic
+[^algorithmic]
+
+[^algorithmic]:<http://mirrors.ctan.org/macros/latex/contrib/algorithms/algorithms.pdf>
+
+加载`algorithmic`宏包, 使用`algorithmic`环境. 
+```LaTex
+\begin{algorithmic}[5]
+...
+\end{algorithm}
+```
+其中, 可选参数表示每几行显示一个行号, 不提供就不显示.
+
+环境内使用以下指令
+```LaTex
+\STATE <text> % 一行代码
+\IF{<text>} ... \ELSE ... \ENDIF
+\IF{<text>} ... \ELSIF{<text>} ... \ENDIF
+
+\FOR{<text>} ... \ENDFOR
+\FORALL{<text>} ... \ENDFOR
+% 其中, 还提供\TO显示"to"关键字
+
+\WHILE{<text>} ... \ENDWHILE
+\REPEAT ... \UNTIL{<text>}
+\LOOP ... \ENDLOOP
+
+\REQUIRE <text> % 输入要求
+\ENSURE <text> % 断言
+\RETURN <text>
+\PRINT <text>
+\COMMENT{<text>}
+% \IF \FOR \FORALL课接受一个可选参数作为注释 
+
+\AND, \OR, \XOR, \NOT, \TO, \TRUE, \FALSE
+```
+
+##### algorithmicx
+[^algorithmicx]
+
+这里介绍`algpseudocode`指令集, 再`\usepackage{algpseudocode}`后, 不需要手动加载`algorithmicx`宏包了.
+
+使用 **`algorithmic`** 环境 (环境名不带'x').
+
+`algpseudocode`几乎继承了`algorithmic`的用法, 但是写法不同:
+
+```LaTex
+\State
+
+\If 
+\Else 
+\EndIf
+\ElsIf
+
+\For
+\EndFor
+\ForAll
+
+\While
+\EndWhile
+\Repeat
+\Until
+\Loop
+\EndLoop
+
+\Require
+\Ensure
+\Return
+\Print
+\Comment
+
+
+\And, \Or, \Xor, \Not, \To, \True, \False
+```
+除此之外, 还提供了:
+```LaTex
+\Procedure{name}{params}
+\EndProcedure
+
+\Function{name}{params}
+\EndFunction
+
+\Call{name}{args}
+```
+
+无论`algorithmic`还是`algorithmicx`都支持交叉引用. 需要注意的是, 在`algorithm`浮动体里加标签, 引用的是算法. 在`algorithmicx`里加标签, 引用的是行号. 用`\ref`引用时, 只会替换为算法编号或行号, 没有前缀.
+
+#### algorithm2e
+由于前面两个宏包已经够用, 这里就不赘述[algorithm2e](http://mirrors.ctan.org/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf)了.
+
+
+#### 伪代码常用符号
+`\gets` : $\gets$
+
+`\leq`: $\leq$
+
+`\geq`: $\geq$
+
+`\neq`: $\neq$
+
 
 ## 数学
+原生的LaTex已经支持基础的数学排版, 若需要编辑复杂的数学公式, 需要用到`amsmath`宏包. 而`mathtools`宏包是`amsmath`的改进. 加载`mathtools`后, 无需手动加载`amsmath`.[^mathtools]
+
+[^mathtools]: <https://en.wikibooks.org/wiki/LaTeX/Mathematics>
+
+### 行内公式和行间公式
+行内公式由一对`$`包裹.
+
+行间公式由`equation`环境包裹, 自动编号.
+
+不带编号的行间公式有: `\[... \]`, `equation*`环境, `displaymath`环境三种写法 
+
+### 数学模式
+与文本模式有以下区别:
+- 忽略空格, 需要人为添加间距: `\␣`, `\,`, `\quad`, `\qquad`
+- 不能分段, 不能用`\\`换行.
+- 所有文本被当作变量. 
+  - 要想使用文本, 用`\mathrm`或`amsmath`的`\text`.
+  
+### 常用写法
+- `_`: 下标, 只对其后一个字符有效. 要想对字符串生效, 用`{` `}`将字符串包裹.
+- `^`: 上标.
+- `'`: 导数符号, 可连用.
+- `\frac{分子}{分母}`: 分式.
+- `\sqrt[n]{}`: 根式.
+- `\binom{上}{下}`: 二项式.
+- `\left`, `\right`: 定界符, 后跟各种括号或这竖线. 其后的符号会根据中间的公式块大小来调整大小, 从而实现矩阵的括号等. 另外, 若符号不是成对的, 如分类讨论时的花括号只有左边, 则另一边写成`\left.`或`\right.`.
+
+### 多行公式
+多行公式涉及对齐问题
+
+使用`amsmath`的`align`环境, 环境内用`$`将公式分为多个部分, 用`\\`换行. 多行公式以`$`的位置对齐.
+
+使用`align`会对每一行进行编号, 在每一行后用`\notag`取消编号.
+
+使用`aligned`则多行公式都没有编号, 外面套一层`equation`即可实现多行共用一个编号.
+
+### 数组
+
+使用`array`环境, 使用方法与表格类似. 配合定界符`\left(`和`\right)`使用.
+
+### 其他字体
+
+- **粗体**: `\mathbf{...}`
+- **标准文本**: `\mathrm{...}`
+- **花体**: `mathscr{...}`, 依赖`mathrsfs`宏包, 仅提供大写字母.
+- **镂空**: `mathbb{...}`, 依赖`amssymb`宏包, 仅提供大写字母.
+
+### 常用符号
+
+
+
+
 ## 其他
