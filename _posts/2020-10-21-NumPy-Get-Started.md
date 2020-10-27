@@ -78,7 +78,7 @@ NumPy的主要对象是多维数组`ndarray`, 里面的元素类型相同 (这�
 
 [^axis]:<https://www.sharpsightlabs.com/blog/numpy-axes-explained/>
 
-```Python3
+```Python
 >>> b = numpy.array([[ 0,  1,  2,  3],
        [ 4,  5,  6,  7],
        [ 8,  9, 10, 11]])
@@ -111,7 +111,9 @@ array([12, 15, 18, 21])
 
 ### 数组堆叠
 
-`column_stack(array)`和`row_stack(array)`
+`np.column_stack(tuple of column vectors or arrays)`和`row_stack(tuple of raw vectors or arrays)`
+
+其中, 参数是一个元组, 里面是多个数组或向量.
 
 ## 拷贝
 
@@ -119,7 +121,7 @@ array([12, 15, 18, 21])
 
 使用`=`传递, 只是传递对数组的引用.
 
-```Python3
+```Python
 >>> a = np.arange(12)
 >>> b = a            # no new object is created
 >>> b is a           # a and b are two names for the same ndarray object
@@ -133,7 +135,7 @@ True
 
 创建了不同的对象, 但是数据是**共享**的.
 
-```Python3
+```Python
 >>> s = a[ : , 1:3]     # spaces added for clarity; could also be written "s = a[:,1:3]"
 >>> s[:] = 10           # s[:] is a view of s. Note the difference between s=10 and s[:]=10
 >>> a
@@ -153,4 +155,7 @@ array([[   0,   10,   10,    3],
 ## 线性代数
 
 `a @ b`: 矩阵相乘
+
 `a.T`: 矩阵转置
+
+
