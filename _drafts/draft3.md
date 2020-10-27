@@ -1,7 +1,7 @@
 ---
 title: Latex基础
 ---
-本文没有指明来源的部分, 默认来源为 [lshort](https://ctan.org/pkg/lshort-zh-cn)
+本文内容默认来源为 [lshort](https://ctan.org/pkg/lshort-zh-cn)
 
 ## 组成
 LaTex主要由文本与命令组成.
@@ -146,7 +146,7 @@ LaTex有一些字符有特殊用途, 因此不能直接使用:
 
 关于编号, `article`对`\section`, `\subsection`, `\subsubsection`提供编号. `book/report`对`\chapter`, `\section`, `\subsection`提供编号. 即, 最高的三级有编号.
 #### 目录
-使用`tableofcontent`生成目录, 目录本身不写入目录, 但这可以配置.
+使用`\tableofcontent`生成目录, 目录本身不写入目录, 但这可以配置.
 
 #### 附录
 使用`\appendix`, 之后的章节编号会有所不同的, 即最高一级的编号使用拉丁字母.
@@ -157,16 +157,16 @@ LaTex有一些字符有特殊用途, 因此不能直接使用:
 ### 交叉引用
 可以在文章中提及文章另一处的章节编号, 图片, 公式等, 称之为**交叉引用**.
 
-被引用的地方添加`\label{name}`. 在引用的地方用`\ref{name}`和`pageref{name}`, 编译后这两个命令分别被替换为相应的编号和页码.
+被引用的地方添加`\label{label-name}`. 在引用的地方用`\ref{label-name}`和`\pageref{lebel-name}`, 编译后这两个命令分别被替换为相应的编号和页码.
 
 添加`\label`的具体位置:
 - **章节**: 在`\section`后立即使用.
 - **行间公式**: 在公式内的任意位置使用. 对于多行公式, 在要引用的公式的那一行使用.
 - **有序列表**: 在`\item`后的任意位置使用.
-- **图标**: 在`\caption`之后立即使用.
+- **图表**: 在`\caption`之后立即使用.
 - **定理**: 在定理中的任意位置使用.
 
-对没有编号的命令中使用`\label`, 如`\section*`会导致编号错误.
+对没有编号的命令中使用`\label`(如`\section*`)会导致编号错误.
 
 ### 脚注
 在文本后使用`\footnote{...}`可以生成脚注, 参数是脚注的文字.
@@ -188,7 +188,7 @@ LaTex有一些字符有特殊用途, 因此不能直接使用:
 
 列表最多嵌套4层.
 
-`description`环境的作用与列表类似, 但更像是列举一系列关键字, 并给出其解释. 环境中的`\item`有可选参数用来写关键字. 关键字在列表中以粗体显示在前面, 描述信息跟在其后.
+`description`环境的作用与列表类似, 但更像是列举一系列关键字, 并给出其解释. 环境中的`\item`有**可选**参数用来写关键字. 关键字在列表中以粗体显示在前面, 描述信息跟在其后.
 
 ### 引用
 有两种引用环境: 
@@ -208,12 +208,92 @@ LaTex有一些字符有特殊用途, 因此不能直接使用:
 
 使用 `\graphicspath{ {path1} {path2}} `指定图片的路径. 可以有多个路径.
 
+#### 修改大小和旋转
+在`\includegraphics`的可选参数处, 填入以下参数:
+- `scale = <proportion>`: 将图片按比例放大缩小.
+- `width = <number><unit>`: 其中`unit`参考[这里](https://www.overleaf.com/learn/latex/Inserting_Images#Reference_guide), 有cm, mm等. 也可以使用数字加`\textwidth`, `\paperwidth`等用来表示与文章宽度的比例.
+- `height = <number><unit>`: 同上.
+  - 上面两个参数若只提供一个, 则默认保持比例缩放.
+- `angle = <number>`: 旋转一定角度. 单位默认是度数, 方向为逆时针.
+
+#### 浮动体
+图片默认是固定在文本里面的, 这样会导致不美观, 也可能导致分页困难. 除了图片, 文章中可能存在着大块的内容, 若他们固定在文本中, 会导致难以分页. 因此LaTex提供了浮动体, 使这些内容可以在文本中自由浮动.
+
+LaTex自带了两个浮动**环境**: `figure`和`table`, 两者里面都可以放置文本, 公式, 表格, 图片等内容.
+
+如`\begin{figure}[placement]`, `placement`是允许出现的位置, 有如下选择:
+|参数|含义|
+|---|---|
+|h|当前位置|
+|t|顶部|
+|b|底部|
+|p|单独成页|
+|!|无视限制|
+
+- 默认为`tbp`
+- 参数的顺序无关
+- "限制"是指:
+  - 除单独成页外，默认每页不超过3个浮动体
+  - 顶部不超过2个, 占页面不超过70%
+  - 底部不超过1个, 占页面不超过30%
+
+使用`\caption[...]{...}`给浮动体添加标题, 并自动编号, 可选参数为短标题. `\caption*`则没有编号. 效果为"Table 1:..."或"Figure 1:...".
+
+编号默认是在最高一级章节内计数, 如`article`中的section, 跨章节重新编号. 这可以通过`chngcntr`宏包来修改, 详情看[这里](https://texblog.org/2014/12/04/continuous-figuretable-numbering-in-latex/)和[这里](https://tex.stackexchange.com/questions/28333/continuous-v-per-chapter-section-numbering-of-figures-tables-and-other-docume/28334#28334).
+
+使用`\centering`来居中, 否则默认为靠左.
+
+要实现文字环绕, 需要`wrapfig`宏包, 使用里面的环境`wrarpfigure`. **不推荐使用**[^wrapfigure].
+
+[^wrapfigure]: <https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions#Wrapping_text_around_figures>
+
+### 表格
+使用`tabular`环境. (**不是`table`**, 后者是浮动体).
+
+用法为:
+```LaTex
+\begin{tabular}[⟨align⟩]{⟨column-spec⟩}
+⟨item1⟩ & ⟨item2⟩ &...\\
+\hline
+⟨item1⟩ & ⟨item2⟩ &...\\
+\end{tabular}
+```
+- `tabular`默认和文本混排, 用可选参数`align`控制垂直方向的对齐.`t`为顶部对齐, `b`为底部对齐, 缺省为居中. 一般表格在`table`浮动体中, 不怎么用这个参数.
+- 单元格以`&`分隔, `\hline`表示绘制横线, `\cline{i - j}`绘制部分单元格的横线.
+- `\\`表格添加一行, `\newline`单元格内换行.
+- 通过必选参数`column-spec`设定列数和格式:
+  |列格式|含义|
+  |---|---|
+  |l/c/r|对齐方式|
+  |p{width}|水平固定宽度, 垂直方向顶端对齐|
+  |m{width}|水平固定宽度, 垂直方向居中对齐, 需要`array`宏包|
+  |b{width}|水平固定宽度, 垂直方向底端对齐, 需要`array`宏包|
+  |\||竖线|
+  |\|\||双竖线|
+  - 注意: 对齐的上中下不是单元格的内容处于上中下的位置, 而是拿内容的上中下与同一行单元格内容的上中下对齐.
+  - 不是竖线之间为一列, 而是一个`l/c/r/p/m/b`为一列. 竖线可以没有
+
+使用命令`\multicolumn{n}{column-spec}{item}`横向合并单元格.
+
+若想纵向合并单元格, 需要`multirow`宏包. 命令为`\multirow{n}{width}{item}`. 配合`\cline`使用.
 
 ### 超链接
+需要`hyperref`宏包. 加载宏包后, 文章内的交叉引用, 目录等, 都将变成超链接.
+
+使用`\url{url}`或`\href{url}{text}`
 
 ### 代码块
+[^code]
 
-### 伪代码
+[^code]: <https://www.overleaf.com/learn/latex/Code_listing>; <https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings>
+
+老的做法: 使用`verbatim`环境, 但这样的效果不好.
+
+使用`listings`宏包中的`lstlisings`环境, 通过设定可选参数`[language = ...]`来设定语言, 通过设定可选参数`[caption = ]`来设置标题.
+
+使用`\lstinputlisting[language=..., linerange={from - to, ...}]{file}`从外面导入源代码.
+#### 伪代码
+有4个包提供了伪代码的排版, 分别是: `algorithmic`, `algorithm2e`, `algorithmicx`, `program`.
 
 ## 数学
 ## 其他
