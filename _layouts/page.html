@@ -1,6 +1,8 @@
 ---
 layout: base
 ---
+
+
 {%- assign _page_mode = page.mode | default: layout.mode | default: site.data.variables.default.page.mode -%}
 {%- assign _page_type = page.type | default: layout.type | default: site.data.variables.default.page.type -%}
 {%- assign _article_header_type = page.article_header.type | default: layout.article_header.type -%}
@@ -80,8 +82,15 @@ layout: base
         {%- endif -%}
         </div>
       {%- endif -%}
-
-
+        {%- if _article_header_type == 'parallax'-%}
+          {%- if page.article_header.image.src -%}
+            {%- include snippets/get-nav-url.html path=page.article_header.image.src -%}
+            {%- assign _header_image_src =  __return | prepend: site.pic_src -%}
+            {%- include snippets/get-nav-url.html path=page.article_header.image.focus -%}
+            {%- assign _header_image_focus = __return -%}
+            <div class="parallax-window" data-parallax="scroll" data-image-src="{{ _header_image_src }}" data-mirror-container=".page__main-inner" data-z-index="auto" data-position-y="100px" data-speed=0.3></div>
+          {%- endif -%}
+        {%- endif -%}
         <div class="page__content">
         {%- if _article_header_type == 'overlay' or _article_header_type == 'cover' -%}
 
@@ -177,7 +186,7 @@ layout: base
 
         {%- endif -%}
 
-
+        
         {%- if _full_width == false -%}
           <div class ="main">
         {%- endif -%}
@@ -217,10 +226,11 @@ layout: base
                 {%- include main/bottom/custom.html -%}
               </div>
             </div>
-
+          
         {%- if _full_width == false -%}
           </div>
         {%- endif -%}
+        
         </div>
 
         {%- if _footer != false -%}
@@ -253,7 +263,8 @@ layout: base
   {%- endif -%}
   {%- include scripts/page.js -%}
 </script>
-
+<script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/parallax.js/1.5.0/parallax.min.js"></script>
 {%- if page.sidebar -%}
 <script>{%- include scripts/components/sidebar.js -%}</script>
 {%- endif -%}

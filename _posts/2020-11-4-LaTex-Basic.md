@@ -6,6 +6,7 @@ header:
 article_header:
   image:
     src: v2-8468e78f07c3234feb8b1f9eeb44ea03_720w.jpg
+    focus: top
 
 ---
 本文内容默认来源为 [lshort](https://ctan.org/pkg/lshort-zh-cn)

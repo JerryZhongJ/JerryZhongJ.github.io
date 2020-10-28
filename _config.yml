@@ -216,7 +216,9 @@ defaults:
      # header:
       #  type: translucent
       article_header:
-        type: cover
+        type: parallax
+        image:
+          focus: center
       license: true
       aside:
         toc: true
@@ -237,6 +239,7 @@ defaults:
       show_date: false
 
 pic_src: "https://cdn.jsdelivr.net/gh/JerryZhongJ/Pics/"
+future: true
 
 ## => Plugins
 ##############################
