@@ -5,13 +5,18 @@ header:
   theme: dark
 article_header:
   image:
-    src: v2-8468e78f07c3234feb8b1f9eeb44ea03_720w.jpg
     focus: -500%
     speed: 2
-
+tags: ["LaTex"]
 ---
-本文内容默认来源为 [lshort](https://ctan.org/pkg/lshort-zh-cn)
+LaTex是当代大学生的必备技能了, 写作业都需要用LaTex排版.
 
+我原本以为LaTex是和Markdown一样的轻量级标记语言, 但结果发现完全不是. LaTex准确来说是排版系统, 是天生为排版而服务的. 而且使用起来更加复杂, 但能实现的效果更多, 功能更多. 另外, Markdown是只是一种文档标记, 只是用来说明文档包含什么元素的(如标题, 表格), 对最后的效果没有定义, 完全看编译器和.css文件的处理. 但LaTex除了说明这些元素, 还规定了他们怎么排布, 使用什么字体, 页眉页脚页边距. 用LaTex可以定义最后的产生效果.
+
+这个帖子主要记录了LaTex的基础功能, 还有一些计科应该比较常用的(如伪代码等), 应该足够应付作业要求了.
+
+本文内容默认来源为 [lshort](https://ctan.org/pkg/lshort-zh-cn)
+<!--more-->
 ## 组成
 
 LaTex主要由文本与命令组成.

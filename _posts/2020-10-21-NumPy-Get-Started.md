@@ -3,12 +3,17 @@ title: 认识NumPy
 cover: IMG_4354.JPG
 header:
     theme: dark
-article_header:
-    image:
-        src: IMG_4354.JPG
 tags: ["NumPy"]
 ---
+为了完成<机器学习导论>这门课的作业, 我开始了解学习NumPy. 嘛, 至少矩阵乘法什么的已经会了.
 
+NumPy是Python的一个扩展库, 主要用于高阶的数组和矩阵运算, 还提供了很多数组的数学函数.
+
+据说, 在NumPy上针对数组和矩阵的算法, 其运行效率与等效的C语言代码一样快.
+
+还可以结合其他扩展库SciPy, 或Matplotlib使用. 之后可能会用到这两个库吧, 在这里挖个坑.
+<!--more-->
+[^wiki]: <https://zh.wikipedia.org/wiki/NumPy>
 ## 基础
 [^basic]
 

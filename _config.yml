@@ -213,7 +213,8 @@ defaults:
     values:
       layout: article
       mode: immersive
-     # header:
+      header:
+        theme: light
       #  type: translucent
       article_header:
         type: parallax

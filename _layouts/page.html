@@ -83,8 +83,8 @@ layout: base
         </div>
       {%- endif -%}
         {%- if _article_header_type == 'parallax'-%}
-          {%- if page.article_header.image.src -%}
-            {%- include snippets/get-nav-url.html path=page.article_header.image.src -%}
+          {%- if page.cover -%}
+            {%- include snippets/get-nav-url.html path=page.cover -%}
             {%- assign _header_image_src =  __return | prepend: site.pic_src -%}
             
             <div class="parallax-window" data-parallax="scroll" data-image-src="{{ _header_image_src }}" data-mirror-container=".page__main-inner" data-z-index="auto" data-position-y="{{page.article_header.image.focus}}" data-speed={{page.article_header.image.speed}}></div>
