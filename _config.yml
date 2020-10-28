@@ -219,6 +219,7 @@ defaults:
         type: parallax
         image:
           focus: center
+          speed: 0.2
       license: true
       aside:
         toc: true

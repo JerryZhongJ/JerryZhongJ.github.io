@@ -86,9 +86,8 @@ layout: base
           {%- if page.article_header.image.src -%}
             {%- include snippets/get-nav-url.html path=page.article_header.image.src -%}
             {%- assign _header_image_src =  __return | prepend: site.pic_src -%}
-            {%- include snippets/get-nav-url.html path=page.article_header.image.focus -%}
-            {%- assign _header_image_focus = __return -%}
-            <div class="parallax-window" data-parallax="scroll" data-image-src="{{ _header_image_src }}" data-mirror-container=".page__main-inner" data-z-index="auto" data-position-y="100px" data-speed=0.3></div>
+            
+            <div class="parallax-window" data-parallax="scroll" data-image-src="{{ _header_image_src }}" data-mirror-container=".page__main-inner" data-z-index="auto" data-position-y="{{page.article_header.image.focus}}" data-speed={{page.article_header.image.speed}}></div>
           {%- endif -%}
         {%- endif -%}
         <div class="page__content">
@@ -265,6 +264,7 @@ layout: base
 </script>
 <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/parallax.js/1.5.0/parallax.min.js"></script>
+
 {%- if page.sidebar -%}
 <script>{%- include scripts/components/sidebar.js -%}</script>
 {%- endif -%}
