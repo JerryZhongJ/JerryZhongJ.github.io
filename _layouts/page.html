@@ -83,10 +83,14 @@ layout: base
         </div>
       {%- endif -%}
         {%- if _article_header_type == 'parallax'-%}
-          {%- if page.cover -%}
-            {%- include snippets/get-nav-url.html path=page.cover -%}
-            {%- assign _header_image_src =  __return | prepend: site.pic_src -%}
-            
+          {%- if page.article_header.image.src or page.cover-%}
+            {%-if page.article_header.image.src-%}
+              {%- include snippets/get-nav-url.html path=page.article_header.image.src -%}
+              {%- assign _header_image_src =  __return | prepend: site.pic_src -%}
+            {%-elsif page.cover-%}
+              {%- include snippets/get-nav-url.html path=page.cover -%}
+              {%- assign _header_image_src =  __return | prepend: site.pic_src -%}
+            {%-endif-%}
             <div class="parallax-window" data-parallax="scroll" data-image-src="{{ _header_image_src }}" data-mirror-container=".page__main-inner" data-z-index="auto" data-position-y="{{page.article_header.image.focus}}" data-speed={{page.article_header.image.speed}}></div>
           {%- endif -%}
         {%- endif -%}
@@ -176,9 +180,14 @@ layout: base
               </div>
             </div>
           {%- elsif _article_header_type == 'cover' -%}
-            {%- if page.article_header.image.src -%}
-              {%- include snippets/get-nav-url.html path=page.article_header.image.src -%}
-              {%- assign _header_image_src =  __return | prepend: site.pic_src -%}
+            {%- if page.article_header.image.src or page.cover-%}
+              {%-if page.article_header.image.src-%}
+                {%- include snippets/get-nav-url.html path=page.article_header.image.src -%}
+                {%- assign _header_image_src =  __return | prepend: site.pic_src -%}
+              {%-elsif page.cover-%}
+                {%- include snippets/get-nav-url.html path=page.cover -%}
+                {%- assign _header_image_src =  __return | prepend: site.pic_src -%}
+              {%-endif-%}
               <img class="article__header--cover" src="{{ _header_image_src }}" />
             {%- endif -%}
           {%- endif -%}

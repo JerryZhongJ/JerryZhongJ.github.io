@@ -540,7 +540,7 @@ LaTex自带了两个浮动**环境**: `figure`和`table`, 两者里面都可以�
 
 ### 常用符号
 
-详情看[这里](https%3A%2F%2Fwww.caam.rice.edu%2F~heinken%2Flatex%2Fsymbols.pdf)|$\displaystyle 1|$$2$|`$2`|
+详情看[这里](https%3A%2F%2Fwww.caam.rice.edu%2F~heinken%2Flatex%2Fsymbols.pdf)
 
 #### 希腊字母
 
