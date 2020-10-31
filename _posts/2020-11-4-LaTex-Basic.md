@@ -42,7 +42,7 @@ Latex的环境是由`\begin{environment name}`和`\end{enviroment name}` 包围�
 [^structure]
 
 [^structure]: <https://en.wikibooks.org/wiki/LaTeX/Document_Structure>
-LaTex文档的总体结构为:
+LaTex文档的总体结构为:  
 
 ```LaTex
 \documentclass{article}
@@ -66,7 +66,7 @@ LaTex最开头以`\documentclass`开始.
 
 在Latex代码的开头通过`\documentclass[options]{class}`来指定文档类, 其中options可选.
 
-常见的文档类有:
+常见的文档类有:  
 
 - **article**: 文章格式. 用于论文, 报告, 说明文档.
 - **report**: 长篇报告. 用于综述, 长篇论文, 简单书籍.
@@ -104,7 +104,7 @@ LaTex最开头以`\documentclass`开始.
 
 ### 换行
 
-这里的换行有两个含义:
+这里的换行有两个含义:  
 
 - 一个段落结束, 另起一个段落.
   - 这种情况用两个换行符实现.
@@ -117,13 +117,10 @@ LaTex最开头以`\documentclass`开始.
 
 对于换行的第二含义, 有时我们一行并没有写完, 但还是希望从换一行开始写, 就需要手动换行.
 
-手动换行的命令有`\\[length]`, `\\*[length]`, `\newline`.
-
-`\\[length]`: 可在文本, 表格, 公式处使用; 可带参数, 表示换行处的垂直间距.
-
-`\newline`: 只可在文本处使用; 不带参数.
-
-`\\*[length]`与`\\[length]`类似, 但表示禁止在换行处分页.
+手动换行的命令有`\\[length]`, `\\*[length]`, `\newline`.  
+- `\\[length]`: 可在文本, 表格, 公式处使用; 可带参数, 表示换行处的垂直间距.
+- `\newline`: 只可在文本处使用; 不带参数.
+- `\\*[length]`: 与`\\[length]`类似, 但表示禁止在换行处分页.
 
 #### 微调
 
@@ -222,15 +219,13 @@ LaTex有一些字符有特殊用途, 因此不能直接使用:
 
 ### 列表
 
-要显示列表, 需要使用**环境**. 其中, `enumerate`是有序列表, `itemize`是无序列表. 在环境内, 使用`\item ...`列举每一项.
+要显示列表, 需要使用**环境**. 其中, `enumerate`是有序列表, `itemize`是无序列表. 在环境内, 使用`\item ...`列举每一项. 列表最多嵌套4层.
 
 ```LaTex
 \begin{enumerate}
 \item ...
 \end{enmuerate}
 ```
-
-列表最多嵌套4层.
 
 `description`环境的作用与列表类似, 但更像是列举一系列关键字, 并给出其解释. 环境中的`\item`有**可选**参数用来写关键字. 关键字在列表中以粗体显示在前面, 描述信息跟在其后.
 
