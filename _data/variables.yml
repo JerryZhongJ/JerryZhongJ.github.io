@@ -54,7 +54,7 @@ sources:
     # mathjax: 'https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML'
     mathjax: 'https://cdn.bootcdn.net/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML'
     # mermaid: 'https://cdn.bootcss.com/mermaid/8.0.0-rc.8/mermaid.min.js'
-    mathjax: 'https://cdn.bootcdn.net/ajax/libs/mermaid/8.8.2/mermaid.min.js'
+    mermaid: 'https://cdn.bootcdn.net/ajax/libs/mermaid/8.8.2/mermaid.min.js'
   unpkg:
     font_awesome: 'https://use.fontawesome.com/releases/v5.0.13/css/all.css'
     jquery: 'https://unpkg.com/jquery@3.3.1/dist/jquery.min.js'
