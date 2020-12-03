@@ -66,8 +66,7 @@ LaTex最开头以`\documentclass`开始.
 - **ctex**~系列: 包括**ctexart**, **ctexrep**, **ctexbook**, **ctexbeamer**等. 支持中文.
   - 需要用XƎLATEX 或 LuaLATEX 进行编译
 
-常见的可选参数包括:
-
+常见的可选参数包括:  
 - **10pt, 11pt, 12pt**: 指定文档的基本字号。默认为10pt。
 - **a4paper, letterpaper, ...**: 指定纸张大小，默认为美式信纸letterpaper（8:5×11英寸）。可指定选项还包括a5paper，b5paper，executivepaper和legalpaper。
 - **twoside, oneside**: 指定单面/双面排版。双面排版时，奇偶页的页眉页脚、页边距不同。article和report默认为oneside，book默认为twoside。
@@ -235,8 +234,7 @@ LaTex有一些字符有特殊用途, 因此不能直接使用: `# $ % & { } _ ^ 
 图片默认是固定在文本里面的, 这样会导致不美观, 也可能导致分页困难. 除了图片, 文章中可能存在着大块的内容, 若他们固定在文本中, 会导致难以分页. 因此LaTex提供了浮动体, 使这些内容可以在文本中自由浮动.
 
 LaTex自带了两个浮动**环境**: `figure`和`table`, 两者里面都可以放置文本, 公式, 表格, 图片等内容.  
-如`\begin{figure}[placement]`, `placement`是允许出现的位置, 有如下选择:
-
+如`\begin{figure}[placement]`, `placement`是允许出现的位置, 有如下选择:  
 |参数|含义|
 |---|---|
 |h|当前位置|
@@ -259,12 +257,23 @@ LaTex自带了两个浮动**环境**: `figure`和`table`, 两者里面都可以�
 要实现文字环绕, 需要`wrapfig`宏包, 使用里面的环境`wrarpfigure`. **不推荐使用**[^wrapfigure].
 
 [^wrapfigure]: <https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions#Wrapping_text_around_figures>
-
+#### 多图展示
+若要同时显示多张图片, 一般有以下几种情况:
+- 多图共享同一个标题: 
+  - 实现: 直接在`figure`浮动体里多次`\includegraphics`即可
+  - 默认是并排展示, 可用`\qquad`等控制间距, 可用`\\`换行.
+- 多图分别有各自的标题: 
+  - 实现: 在`figure`浮动体里为每一张图使用`minipage`环境.
+  - `minipage`之间可用`\qquad`等控制间距.
+  - `minipage`内使用`\caption`生成标题, 使用`\centering`居中.
+- 多图共享一个标题, 但分别拥有各自的小编号: 
+  - 需要用`subfig`宏包的`\subfloat[caption]{...}`命令, 可选参数为标题. 必选参数为内容, 如:`\includegraphcis`等
+  - `\subfloat{}`的必选参数内可以使用`\label`, 引用时需要用`\subref`来引用.
+  
 ### 表格
 
 使用`tabular`环境. (**不是`table`**, 后者是浮动体).  
-用法为:
-
+用法为:  
 ```
 \begin{tabular}[⟨align⟩]{⟨column-spec⟩}
 ⟨item1⟩ & ⟨item2⟩ &...\\
@@ -312,12 +321,11 @@ LaTex自带了两个浮动**环境**: `figure`和`table`, 两者里面都可以�
 
 #### 伪代码
 
-[^algorithm]
+[^algorithm]algo
 
 [^algorithm]:<https://en.wikibooks.org/wiki/LaTeX/Algorithms>; <https://tex.stackexchange.com/questions/229355/algorithm-algorithmic-algorithmicx-algorithm2e-algpseudocode-confused>
 
-有4个包提供了伪代码的排版, 分别是:
-
+有4个包提供了伪代码的排版, 分别是:  
 - `algorithmic`: 只能使用预定义的命令, 且命令是大写的, 格式如下
 - `algorithmicx`: 不提供任何命令, 但可以自定义命令, 或者使用第三方的命令集. 原话如下:
   > The packagealgorithmicxitself doesn’t define any algorithmic commands,but gives a set of macros to define such a command set.  You may use onlyalgorithmicx, and define the commands yourself, or you may use one of thepredefined command sets.  
@@ -334,8 +342,7 @@ LaTex自带了两个浮动**环境**: `figure`和`table`, 两者里面都可以�
 `algorithm`: 提供了`algorithm`环境, 用来给`alogrithmic`和`algorithmicx`提供浮动体.
 `algpseudocode`: `algorithmicx`的指令集, 风格类似与`algorithmic`.
 
-使用方法:
-
+使用方法:  
 ##### algorithmic
 
 [^algorithmic]
@@ -380,10 +387,9 @@ LaTex自带了两个浮动**环境**: `figure`和`table`, 两者里面都可以�
 
 [^algorithmicx]
 
-这里介绍`algpseudocode`指令集, 再`\usepackage{algpseudocode}`后, 不需要手动加载`algorithmicx`宏包了.  
+这里介绍`algpseudocode`指令集, 在`\usepackage{algpseudocode}`后, 不需要手动加载`algorithmicx`宏包了.  
 使用 **`algorithmic`** 环境 (环境名不带'x').  
-`algpseudocode`几乎继承了`algorithmic`的用法, 但是写法不同:
-
+`algpseudocode`几乎继承了`algorithmic`的用法, 但是写法不同:  
 ```
 \State
 
@@ -413,8 +419,7 @@ LaTex自带了两个浮动**环境**: `figure`和`table`, 两者里面都可以�
 \And, \Or, \Xor, \Not, \To, \True, \False
 ```
 
-除此之外, 还提供了:
-
+除此之外, 还提供了:  
 ```
 \Procedure{name}{params}
 \EndProcedure
@@ -425,13 +430,13 @@ LaTex自带了两个浮动**环境**: `figure`和`table`, 两者里面都可以�
 \Call{name}{args}
 ```
 
-无论`algorithmic`还是`algorithmicx`都支持交叉引用. 需要注意的是, 在`algorithm`浮动体里加标签, 引用的是算法. 在`algorithmicx`里加标签, 引用的是行号. 用`\ref`引用时, 只会替换为算法编号或行号, 没有前缀.
+无论`algorithmic`还是`algorithmicx`都支持交叉引用. 需要注意的是, 在`algorithm`浮动体里加标签, 引用的是整个伪代码. 在`algorithmicx`环境里加标签, 引用的是行号. 用`\ref`引用时, 只会替换为算法编号或行号, 没有前缀.
 
-#### algorithm2e
+##### algorithm2e
 
 由于前面两个宏包已经够用, 这里就不赘述[algorithm2e](http://mirrors.ctan.org/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf)了.
 
-#### 伪代码常用符号
+##### 伪代码常用符号
 
 `\gets` : $\displaystyle \gets$
 
@@ -459,7 +464,8 @@ LaTex自带了两个浮动**环境**: `figure`和`table`, 两者里面都可以�
 - 忽略空格, 需要人为添加间距: `\␣`, `\,`, `\quad`, `\qquad`
 - 不能分段, 不能用`\\`换行.
 - 所有文本被当作变量.
-  - 要想使用文本, 用`\mathrm`或`amsmath`的`\text`.
+  - 要想使用文本, 用`\mathrm`, `\text`, `\mbox`.
+  - 其中若文本是中文, 则只能用`\text`或`\mbox`
   
 ### 常用写法
 
@@ -469,7 +475,9 @@ LaTex自带了两个浮动**环境**: `figure`和`table`, 两者里面都可以�
 - `\frac{分子}{分母}`: 分式.
 - `\sqrt[n]{}`: 根式.
 - `\binom{上}{下}`: 二项式.
-- `\left`, `\right`: 定界符, 后跟各种括号或这竖线. 其后的符号会根据中间的公式块大小来调整大小, 从而实现矩阵的括号等. 另外, 若符号不是成对的, 如分类讨论时的花括号只有左边, 则另一边写成`\left.`或`\right.`.
+- `\left`, `\right`: 定界符, 后跟各种括号或这竖线. 其后的符号会根据中间的公式块大小来调整大小, 从而实现矩阵的括号等. 
+  - 对于大括号, 要用`\{` `\}`
+  - 若符号不是成对的, 则另一边写成`\left .`或`\right .`.
 
 ### 多行公式
 
@@ -481,7 +489,7 @@ LaTex自带了两个浮动**环境**: `figure`和`table`, 两者里面都可以�
 
 ### 数组
 
-使用`array`环境, 使用方法与表格类似. 配合定界符`\left(`和`\right)`使用.
+使用`array`环境, 使用方法与表格类似. 配合定界符`\left (`和`\right )`使用.
 
 ### 其他字体
 
