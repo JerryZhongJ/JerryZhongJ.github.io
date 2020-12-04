@@ -23,11 +23,13 @@ html,
   height: 100%;
   color: $text-color;
   .col-aside {
+    //height: 10vh;
     display: none;
     & > aside {
       position: absolute;
+      //height: 10vh;
       width: map-get($layout, aside-width);
-      @include overflow(hidden);
+      // @include overflow(hidden);
     }
   }
 }
@@ -63,6 +65,13 @@ html,
 .page__aside {
   .toc-aside {
     padding: map-get($spacers, 5) 0 map-get($spacers, 3) map-get($spacers, 5);
+    height: 100vh;
+    @include overflow(auto);
+    &::-webkit-scrollbar {
+      width: 0;
+      background: transparent;
+    }
+    
   }
 }
 
