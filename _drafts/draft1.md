@@ -102,4 +102,18 @@ p_list = doc.getElementsByTagName("para");
 2. 内联元素的height width与内容一致。你无法设置内联元素的height width 
 3. 块级元素按照基于其父元素的书写顺序(默认: 从上至下)的块流动方向放置 --- 每个块级元素会在上一个元素下面另起一行，它们会被设置好的margin 分隔。
 4. 内联元素只要在其父级块级元素的宽度内有足够的空间，它们与其他内联元素、相邻的文本内容（或者被包裹的）被安排在同一行。如果空间不够，溢出的文本或元素将移到新的一行。
+###  修改布局
+- `display`属性
+- `float`
 
+### 弹性盒子
+弹性盒子(Flexbox)是一种用于按行或按列布局元素的一维布局方法, 块级元素不再.另起一行。元素可以膨胀以填充额外的空间, 收缩以适应更小的空间.  
+
+在设置元素的属性`display: flex`, 改变的是这个元素的**内部**显示方式. 设置了`display: flex`的父元素被称之为 flex 容器(flex container).在 flex 容器中表现为柔性的盒子的元素被称之为 flex 项 (flex item).
+
+- 在flex容器设置`flex-direction: column`来设置flex项的分布方向.  
+- 在flex容器设置`flex-wrap`指定容器是否全部包含flex项, 可选值有`wrap`, `nowrap`, `wrap-reverse`. 若选择`wrap`, 则当flex项过多时会自动换行.
+
+
+## CSS 选择
+int main(){}
