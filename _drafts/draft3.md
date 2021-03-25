@@ -48,4 +48,16 @@ operates on intermediate representation(中间表示), such as Control-flow grap
 abstract state vs. concrete state: 是否追踪变量的具体取值, 还是抽象成可能取值的集合.
 
 不具有完备性(Completeness): 不一定找到所有的invariant
-具有可靠性(Soundness): 找到的invariant必然是对的
+具有可靠性(Soundness): 找到的invariant必然是对的.
+
+程序分析无法同时实现**可结束**且**完备**且**可靠**, 不同的程序分析在完备与可靠之间trade off.
+
+程序分析的用处:
+1. 编译器: 生成高效等价代码
+2. 软件工具: 用于testing, debugging, verification.
+    1. 发现程序错误
+    2. 证明程序不变量
+    3. 生成代码
+    4. 定位错误
+3. IDEs: 理解代码, 重组代码. 主要用于大型项目.
+
