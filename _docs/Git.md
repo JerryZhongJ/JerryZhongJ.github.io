@@ -1,6 +1,6 @@
 ---
 title: Git
-
+tags: ["Git"]
 ---
 
 ## 基本操作

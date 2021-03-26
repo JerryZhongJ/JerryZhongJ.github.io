@@ -1,8 +1,10 @@
 ---
-title: Linux
+title: Linux 基本文件权限操作
+tags: ["Linux"]
+cover: 
 ---
 
-## 文件权限
+### 文件权限
 
 三类用户: u(所有者) g(所属组用户) o(其他用户)
 
@@ -16,7 +18,7 @@ title: Linux
 
 
 
-### 数字表示:
+## 数字表示:
 
 即为rwx的二进制表示, (按rwx的顺序)
 
@@ -31,7 +33,7 @@ title: Linux
 
 
 
-### 相关指令
+## 相关指令
 
 **显示目录详细信息**: ls -l
 
@@ -41,7 +43,7 @@ title: Linux
 
 **修改访问权限**: chmod, 需要是所有者或root
 
-### 进程权限
+## 进程权限
 
 有三种id(只说user, group同理): real user id, effective user id, saved set user id.
 
