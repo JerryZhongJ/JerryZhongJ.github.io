@@ -1,16 +1,6 @@
 header:
   - title:      Home
     url:        /
-  - title:      Docs
-    url:        "/docs/Words Before"
-    key:        docs
   - title:      Archive
     url:        /archive.html
 
-docs:
-  - title: Git
-    url: /docs/Git
-  - title: Linux
-    url: /docs/Linux
-  - title: Latex
-    url: /docs/Latex
