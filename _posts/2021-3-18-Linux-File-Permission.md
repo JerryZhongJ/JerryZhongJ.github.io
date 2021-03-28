@@ -4,8 +4,8 @@ tags: ["Linux"]
 cover: https://cdn.jsdelivr.net/gh/JerryZhongJ/Pictures/20210326221159.JPG
 date: 2021-3-18
 ---
-
-### 文件权限
+<!--more-->
+## 文件权限
 
 三类用户: u(所有者) g(所属组用户) o(其他用户)
 
@@ -19,7 +19,7 @@ date: 2021-3-18
 
 
 
-## 数字表示:
+## 数字表示
 
 即为rwx的二进制表示, (按rwx的顺序)
 
