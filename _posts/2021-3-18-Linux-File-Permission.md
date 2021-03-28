@@ -1,5 +1,5 @@
 ---
-title: Linux 基本文件权限
+title: Linux 基本权限
 tags: ["Linux"]
 cover: https://cdn.jsdelivr.net/gh/JerryZhongJ/Pictures/20210326221159.JPG
 date: 2021-3-18
@@ -19,7 +19,7 @@ date: 2021-3-18
 
 
 
-## 数字表示
+### 数字表示
 
 即为rwx的二进制表示, (按rwx的顺序)
 
@@ -30,11 +30,11 @@ date: 2021-3-18
 | 第三个数字     | **组**权限同上                                               |
 | 第四个数字位   | **其他用户**权限同上                                         |
 
- [^文件权限]
+ [^file_permit]
 
 
 
-## 相关指令
+### 相关指令
 
 **显示目录详细信息**: ls -l
 
@@ -45,17 +45,17 @@ date: 2021-3-18
 **修改访问权限**: chmod, 需要是所有者或root
 
 ## 进程权限
-
+[^task_permisson1]
 有三种id(只说user, group同理): real user id, effective user id, saved set user id.
 
-**real user id**: 进程执行者的user id, 就是当前登录用户的id. 子进程的real user id 继承自父进程的real user id,一般无法改变.[^待确认]
+**real user id**: 进程执行者的user id, 就是当前登录用户的id. 子进程的real user id 继承自父进程的real user id,一般无法改变(???).
 
-在登陆时, login进程验证成功后, 会exec shell进程, 并设置shell进程的real user id 为该用户. 因此此后的由shell fork出来的子进程以及子进程的子进程....的real user id都是此用户.[^进程权限1]
+在登陆时, login进程验证成功后, 会exec shell进程, 并设置shell进程的real user id 为该用户. 因此此后的由shell fork出来的子进程以及子进程的子进程....的real user id都是此用户.
 
-**effective user id**: 进程进行文件操作时检查的权限.(真正意义上的进程的权限) 一般就是real user id, 但当可执行文件的set user id位被设置, 则effective user id = executable file's owner id. 注意: owner id是文件的所有者id, 不一定是当前登录的用户.[^进程权限1]
+**effective user id**: 进程进行文件操作时检查的权限.(真正意义上的进程的权限) 一般就是real user id, 但当可执行文件的set user id位被设置, 则effective user id = executable file's owner id. 注意: owner id是文件的所有者id, 不一定是当前登录的用户.
 
-**saved set user id**: 在进程创建时, 父进程的effective user id的一份拷贝. 日后, 通过setuid()可以将effecitve user id设置为real user id, 或者 saved set user id. 即有机会获得执行者的权限, 或者父进程的权限.[^进程权限1]
+**saved set user id**: 在进程创建时, 父进程的effective user id的一份拷贝. 日后, 通过setuid()可以将effecitve user id设置为real user id, 或者 saved set user id. 即有机会获得执行者的权限, 或者父进程的权限.
 
-[^进程权限1]:<https://www.cnblogs.com/sparkdev/p/9694103.html>
-[^文件权限]:<https://www.debian.org/doc/manuals/debian-reference/ch01.zh-cn.html#_unix_file_basics>
+[^task_permisson1]:<https://www.cnblogs.com/sparkdev/p/9694103.html>
+[^file_permit]:<https://www.debian.org/doc/manuals/debian-reference/ch01.zh-cn.html#_unix_file_basics>
 
