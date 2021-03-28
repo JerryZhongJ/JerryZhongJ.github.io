@@ -1,6 +1,6 @@
 ---
 title: 博客建成!
-cover: IMG_4319.PNG
+cover: https://cdn.jsdelivr.net/gh/JerryZhongJ/Pictures/20210326221219.PNG
 header:
     theme: light
 tags: ["博客", "GitHub Pages", "jekyll", "Ruby"] 

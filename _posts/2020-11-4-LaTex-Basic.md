@@ -1,12 +1,8 @@
 ---
 title: LaTex基础
-cover: v2-8468e78f07c3234feb8b1f9eeb44ea03_720w.jpg
+cover: https://cdn.jsdelivr.net/gh/JerryZhongJ/Pictures/20210326221138.jpg
 header:
   theme: dark
-article_header:
-  image:
-    focus: -500%
-    speed: 2
 tags: ["LaTex"]
 ---
 LaTex是当代大学生的必备技能了, 写作业都需要用LaTex排版.

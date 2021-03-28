@@ -1,6 +1,6 @@
 ---
 title: 认识NumPy
-cover: IMG_4354.JPG
+cover: https://cdn.jsdelivr.net/gh/JerryZhongJ/Pictures/20210326221220.JPG
 header:
     theme: dark
 tags: ["NumPy"]

@@ -25,3 +25,5 @@ Gemfile.lock
 _site/
 .jekyll-metadata
 .jekyll-cache/
+outer_assets/
+_ref

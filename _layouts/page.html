@@ -86,10 +86,10 @@ layout: base
           {%- if page.article_header.image.src or page.cover-%}
             {%-if page.article_header.image.src-%}
               {%- include snippets/get-nav-url.html path=page.article_header.image.src -%}
-              {%- assign _header_image_src =  __return | prepend: site.pic_src -%}
+              {%- assign _header_image_src =  __return -%}
             {%-elsif page.cover-%}
               {%- include snippets/get-nav-url.html path=page.cover -%}
-              {%- assign _header_image_src =  __return | prepend: site.pic_src -%}
+              {%- assign _header_image_src =  __return -%}
             {%-endif-%}
             <div class="parallax-window" data-parallax="scroll" data-image-src="{{ _header_image_src }}" data-mirror-container=".page__main-inner" data-z-index="auto" data-position-y="{{page.article_header.image.focus}}" data-speed={{page.article_header.image.speed}}></div>
           {%- endif -%}
@@ -104,9 +104,9 @@ layout: base
             {%- assign _article_header_theme = page.article_header.theme | default: layout.article_header.theme | default: site.data.variables.default.page.article_header.theme -%}
 
             {%- if page.article_header.background_image.src -%}
-              {%- assign _header_background_image_src = page.article_header.background_image.src | prepend: site.pic_src-%}
+              {%- assign _header_background_image_src = page.article_header.background_image.src -%}
             {%- elsif page.article_header.background_image != false and page.cover -%}
-              {%- assign _header_background_image_src =  page.cover | prepend: site.pic_src-%}
+              {%- assign _header_background_image_src =  page.cover -%}
             {%- endif -%}
 
             {%- if page.article_header.background_image.gradient -%}
@@ -183,10 +183,10 @@ layout: base
             {%- if page.article_header.image.src or page.cover-%}
               {%-if page.article_header.image.src-%}
                 {%- include snippets/get-nav-url.html path=page.article_header.image.src -%}
-                {%- assign _header_image_src =  __return | prepend: site.pic_src -%}
+                {%- assign _header_image_src =  __return -%}
               {%-elsif page.cover-%}
                 {%- include snippets/get-nav-url.html path=page.cover -%}
-                {%- assign _header_image_src =  __return | prepend: site.pic_src -%}
+                {%- assign _header_image_src =  __return -%}
               {%-endif-%}
               <img class="article__header--cover" src="{{ _header_image_src }}" />
             {%- endif -%}
