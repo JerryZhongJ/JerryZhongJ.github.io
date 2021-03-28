@@ -223,7 +223,7 @@ defaults:
       show_edit_on_github: true
       show_subscribe: true
 
-pic_src: "https://cdn.jsdelivr.net/gh/JerryZhongJ/Pics/"
+# pic_src: "https://cdn.jsdelivr.net/gh/JerryZhongJ/Pics/"
 future: true
 
 ## => Plugins

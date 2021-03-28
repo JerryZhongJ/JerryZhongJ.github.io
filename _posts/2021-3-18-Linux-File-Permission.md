@@ -1,7 +1,7 @@
 ---
 title: Linux 基本文件权限
 tags: ["Linux"]
-cover: 20210326221159.JPG
+cover: https://cdn.jsdelivr.net/gh/JerryZhongJ/Pictures/20210326221159.JPG
 date: 2021-3-18
 ---
 
