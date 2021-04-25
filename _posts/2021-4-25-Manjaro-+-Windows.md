@@ -4,7 +4,9 @@ tags: ["UEFI", "引导", "双系统", "Linux"]
 cover: https://cdn.jsdelivr.net/gh/JerryZhongJ/Pictures/20210326221214.png
 ---
 
+网上关于如何安装Windows+Linux的教程一查一大堆, 一般都是博客里面的. 但他们大都都只是记录了操作流程, 并没有对"为什么要这么做"有太多解释. 我不愿意就这样盲目的上手, 所以花了大量时间做前期的准备, 补充基础知识. 
 
+所以这篇博客一反常态, 反而很少提及具体怎么做, 因为这种东西在网上找找就好了. 本篇博客重点在于解释, 以及把所有查到的资料汇总.
 <!--more-->
 ## 分区
 
@@ -28,7 +30,7 @@ cover: https://cdn.jsdelivr.net/gh/JerryZhongJ/Pictures/20210326221214.png
 
 > The disk stores the information about the partitions' locations and sizes in an area known as the **partition table** that **the operating system reads before any other part of the disk**.
 
-分区信息存在硬盘的分区表中, 分区可以看作是物理层面的行为!
+分区信息存在硬盘的分区表中, 分区可以看作是**物理层面**的行为!
 
 分区的意义:  
 1. Separating user data from system data can **prevent** the system partition **from becoming full and rendering the system unusable**. 
@@ -213,19 +215,20 @@ drivers are closed-source, written and updated only by the hardware manufacturer
 **/**: 根目录. /usr和/etc一定要和根目录在同一个分区. 其中/usr保存的处共享的,只读的用户数据包含大量的用户应用文件
 **/boot**: 用来存放系统内核,ramdisk,boot loader等. 一般而言不需要单独分区, 除非boot loader并不支持在根目录下访问/boot(比如说文件系统不支持). 假如不是吧ESP挂载到/boot, 那就分配200MiB足以. 我这里选择不单独分区.
 **/home**: 保存的是个人数据, 个人的配置文件等.
+**swap**: 一般用于当内存不够时, 用来和硬盘交换的; 或者需要休眠时, 存放在硬盘上. 关于swap的大小, 一般推荐RAM size为2GB-8GB的swap设置为同样的大小. 对于需要休眠的情况, Ubuntu推荐要RAM size + sqrt(RAM size), RedHat推荐要2X[^redhat_swap], 而Arch官网说即便swap size小于RAM也是可以成功休眠的[^arch_hibernation]. 众说纷纭, 我选择= RAM size, 根据Arch Linux的推荐.
 
-swap一般用于当内存不够时, 用来和硬盘交换的; 或者需要休眠时, 存放在硬盘上. 关于swap的大小, 一般推荐RAM size为2GB-8GB的swap设置为同样的大小. 对于需要休眠的情况, Ubuntu推荐要RAM size + sqrt(RAM size), RedHat推荐要2X[^redhat_swap], 而Arch官网说即便swap size小于RAM也是可以成功休眠的[^arch_hibernation]. 众说纷纭, 我选择= RAM size, 根据Arch Linux的推荐.
 [^swap]: <https://opensource.com/article/19/2/swap-space-poll>
 [^redhat_swap]: <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/installation_guide/sect-disk-partitioning-setup-x86#sect-recommended-partitioning-scheme-x86>
 [^arch_hibernation]: <https://wiki.archlinux.org/index.php/Power_management/Suspend_and_hibernate>
 [^arch_swap]: <https://wiki.archlinux.org/index.php/Partitioning#Swap>
 [^partitioning]: <https://wiki.archlinux.org/index.php/Partitioning>
 
+具体操作为:  
 1. 找到原来的ESP, 点击保留, 挂载到/boot/efi标记为boot和esp.
 2. 选择空闲区, 点击创建, 文件系统为linuxswap, 大小为8GB, 标记为swap.
 3. 选择空闲区,点击创建, 文件系统为ext4, 大小为64G, 挂载到根目录, 标记为root.
 4. 剩余空间挂载到/home, 没有标记.
-5. 
+
 ### update GRUB
 
 有时候GRUB2不会检测Windows, 此时需要手动执行:
@@ -240,4 +243,11 @@ sudo update-grub
 ### 更改源
 ### 时间
 
-## Linux桌面选择
+
+## 感想
+
+这次准备花了大概3天, 个人感觉效率很低. 频繁地在各个页面间切换, 却没有耐下性子好好看看里面的内容, 导致遗漏的东西很多, 要对一个页面反复地阅读.
+
+另外, 我还发现各种各样的贴吧,论坛,博客的内容可信度参差不齐.我不愿意听信一家之言, 所以在对比和验证中花了很多时间. 但这个花费是可以避免的, 我应该优先找官方教程(User guide), 里面的内容直接与我要做的事情相关, 集中而且权威; 其次再找wiki, 里面权威, 但是无关的东西很多; 再次才找各种Forum, 这可能是针对某个非常具体的问题, 而上面两个地方都没有提及才去. 
+
+另外, 我还意识到时效性的问题. 以前我从来不看帖子,博客什么时候写的, 但是我渐渐地发现, 有些信息是会过时的. 因此在查询之前, 我应该先想好我要的信息最远可以多久以前写的, 在浏览帖子的时候先找时间.
