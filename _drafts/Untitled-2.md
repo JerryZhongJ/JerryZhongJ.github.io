@@ -34,9 +34,9 @@ tags: ["Disk", "MBR", "GPT", "Arch Linux"]
 2. Partitioning can also make **backing up easier**.
 
 分区表有: **MBR** partition table, GUID partion table(**GPT**), Apple partition map(APM).
-[^partition]
+[^diskpartition]
 
-[^partition]: <https://en.wikipedia.org/wiki/Disk_partitioning>
+[^diskpartition]: <https://en.wikipedia.org/wiki/Disk_partitioning>
 
 **卷**:
 > A Volume is a logical abstraction from physical storage.[^volume]
@@ -88,7 +88,6 @@ GPT的优点有:
 Windows的挂载就是分配盘符. 我们插入U盘时,就是挂载一个存储设备, 此时就多了一个盘符. 我们通过这个盘符访问U盘里的文件. 卸载后, 盘符就回收了.
 
 ### Linux的挂载
-用Windows的方式理解Linux的挂载可能会有点困难. 在Windows里面, 一个盘符就相当于根目录, 盘符后面的路径表示在文件在这个分区里面的位置. 
 
 物理硬盘有自己的文件系统, 即自己的目录结构. Linux的挂载就是把这个硬盘分区的文件系统(or part of it)映射到逻辑的文件目录上. 通过这个文件目录来访问物理文件系统中的文件. 如一个硬盘分区里有/file.txt, 我把硬盘分区挂载到/home上, 那么我就可以通过/home/file.txt来访问硬盘上的文件. 根目录必然挂载了一个硬盘分区.
 
@@ -114,31 +113,53 @@ BIOS的引导过程为:
 UEFI兼容MBR分区表, 支持GPT表.
 ![](/assets/posts_ref/Manjaro%20+%20Windows/UEFI_boot_process.png)
 
-1. 系统启动自检.
-2. UEFI 读取NVRAM的引导项(?)来决定从哪里启动哪个EFI程序. (e.g. from which disk and partition).
-   - 引导项可能是一个硬盘. 那么会查找该硬盘的EFI分区并找到路径/EFI/BOOT/BOOTX64.EFI. 因此, 我们可以通过可移动存储设备(USB闪存)来引导.
-   - 文件路径约定为/EFI/BOOT\BOOT<MACHINE_TYPE_SHORT_NAME>.EFI, 其中machine_type是指机器架构如x64.
-2. 启动该程序
+
+UEFI用一个东西叫做UEFI boot manager, 可以看作是一个启动菜单一样的东西. 在Linux, 我们可以用efibootmgr这个工具对它修改,添加,删除. 在Windows用EasyUEFI.
+uefi boot entry存储在NVRAM中, 形如:
+```shell
+[root@system directory]# efibootmgr -v 
+BootCurrent: 0002 
+Timeout: 3 seconds 
+BootOrder: 0003,0002,0000,0004 
+Boot0000* CD/DVD Drive BIOS(3,0,00) 
+Boot0001* Hard Drive HD(2,0,00) 
+Boot0002* Fedora HD(1,800,61800,6d98f360-cb3e-4727-8fed-5ce0c040365d)File(\EFI\fedora\grubx64.efi) 
+Boot0003* opensuse HD(1,800,61800,6d98f360-cb3e-4727-8fed-5ce0c040365d)File(\EFI\opensuse\grubx64.efi) 
+Boot0004* Hard Drive BIOS(2,0,00)P0: ST1500DM003-9YN16G . 
+[root@system directory]#
+```
+第二行说的是这个boot menu的停留时间.
+
+UEFI会挨个尝试这些efi项. 其中Boot0000和Boot0004表示以BIOS兼容模式启动.  
+
+Boot0001没有指示引导目标, 只说了引导哪个硬盘. 在这个情况下, UEFI会挨个查找EFI System Partition(ESP), 在ESP查找某个位置的某个文件. 位置和文件名根据机器架构而定. 命名规范为\EFI\BOOT\BOOT{machine type short-name}.EFI . 对于x86-64的机器, 就找\EFI\BOOT\BOOTx64.EFI. 这主要是用来从可移动设备引导,这样就不需要提前配置引导文件的具体位置了.
+
+Boot0002和Boot0003表示用来引导永久OS的, 它指示出引导文件的具体位置, 即\EFI\opensuse\grubx64.efi.
+
  [^uefi]
 
- 不同的操作系统
+[^uefi]: <https://www.happyassassin.net/posts/2014/01/25/uefi-boot-how-does-that-actually-work-then/>; <https://wiki.archlinux.org/index.php/Arch_boot_process#Under_UEFI>
 
-[^uefi]: <https://wiki.archlinux.org/index.php/Arch_boot_process#Under_UEFI>
 
-### GRUB
 
 ### 双系统
 
-我的情况是先安装了Windows, 再安装Linux, 此时已经有efi分区. 不需要重新创建分区，只需要挂载分区.
+我的情况是先安装了Windows, 再安装Linux, 此时已经有efi分区. 不需要重新创建分区，只需要挂载分区. 挂载到/boot/efi. [^efi_mount]
 
+引导的话, 可以在UEFI引导双系统, 每次在UEFI处选择; 也可以都交给GRUB来引导, UEFI每次都启动GRUB. 但是前者要看硬件的UEFI怎么实现的, 有些不允许我们选择, 而且Windows可能存在一个问题, 就是每次Windows启动会自动将自己的EFI entry移到最上方[^windows_efi]. 因此我先尝试着用uefi, 若不行, 在研究如何让GRUB引导Windows.
+
+Manjaro使用Calamares作为安装程序, 使用GRUB作为bootloader.
 注意安全引导的问题.
 [^dualsys]: <https://wiki.archlinux.org/index.php/EFI_system_partition_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E6%8C%82%E8%BD%BD%E5%88%86%E5%8C%BA>; <https://wiki.archlinux.org/index.php/Dual_boot_with_Windows#UEFI_systems>
+[^windows_efi]: <https://askubuntu.com/questions/838780/windows-10-changes-uefi-boot-order-every-time>
+[^efi_mount]: <https://wiki.manjaro.org/index.php/UEFI_-_Install_Guide#Setting_filesystem_mount_points>
+
 
 ### 安全启动
 
 在开启安全启动后，在信任的组件运行结束后（如烧录在Flash上的UEFI固件PEI和DXE部分），固件接下来会要求所有运行应用和驱动都要有被认可的数字签名，否则不予执行。这些应用和驱动包括：Shell、扩展驱动和OS Loader。最后OS Loader也就是操作系统引导程序，它的本质是一个UEFI应用程序，它由操作系统厂商提供并签名。其后的操作系统的映像签名则由OS Loader来验证，由此构成一个信任链条，保证OS映像甚至内核驱动都是被签名验证过的。
 
-Linux系统面临着没有数字签名的问题. Ubuntu支持Secure Boot, 但Manjaro不支持, 因此**需要先disable**.[needtodisable]
+Linux系统面临着没有数字签名的问题. Ubuntu支持Secure Boot, 但Manjaro不支持, 因此**需要先disable**安全启动.[needtodisable]
 
 [^secureboot]
 
@@ -147,17 +168,57 @@ Linux系统面临着没有数字签名的问题. Ubuntu支持Secure Boot, 但Man
 
 ## 双系统下的休眠问题
 
+首先, 如果两个OS共享同一个硬盘分区, 不能在一个OS休眠后启动另一个OS, 这会破坏数据一致性, 导致数据丢失.尤其是两个OS共享EFI分区, 可能让EFI partition损坏. 而windows的快速启动功能会让"Windows的关闭计算机"实际为休眠.
+
+因此, 首先要关闭Windows的快速启动功能, 其次要保证每次切换系统时, **不要休眠**. 最好就把休眠功能关掉.
 [^hibernation]: <https://wiki.archlinux.org/index.php/Dual_boot_with_Windows#Fast_Startup_and_hibernation>
 
-## 前期准备
+## 开始安装
 [^install]: <https://forum.manjaro.org/t/root-tip-dual-boot-manjaro-and-windows/1164>
-### 在USB启动
-### Intel RST
-安装Manjaro需要关闭Intel Optane Memory 和 Rapid Storage Technology.
-若启用RST, 硬盘处于RAID模式, 则安装程序无法识别硬盘.[^rst]
+### 烧录镜像进USB
+在Windows使用rufus烧录, 当问你"ISO模式还是dd模式"时, 一定要选择dd模式.[^iso_dd]
+
+[^iso_dd]: <https://wiki.manjaro.org/index.php/Burn_an_ISO_File#Writing_to_a_USB_Stick_in_Windows>
+
+### Disable Intel RST
+安装Manjaro前需要关闭Intel Optane Memory 和 Rapid Storage Technology.
+
+若启用RST, 硬盘处于RAID模式, 则安装程序无法识别硬盘.[^rst] 在BIOS里面也要把SATA模式由RAID改为AHCI, **这一般会导致Windows启动不了**, 因此要先去查一下如何修改SATA模式且不需要重装Windows的方法. 我进BIOS看过, SATA已经是AHCI模式, 我就没有了解了.
 
 [^rst]: <https://forum.manjaro.org/t/install-manjaro-with-sata-mode-raid/5525>; <https://forum.manjaro.org/t/ssd-not-detected-when-booting-in-live-environment/16679>
-## linux分区
+### Driver选择
+先进入Live Environment时会要求选择语言, 键盘和Driver. Driver的选择方法如下:
+
+> Free :
+drivers are open-source, like Manjaro itself, written and updated by a large community. For AMD graphics cards and > hardware with Intel-based integrated graphics, this is the best choice.
+> 
+> Non-Free :
+drivers are closed-source, written and updated only by the hardware manufacturers. This is generally the best choice for newer Nvidia dedicated graphics. For older Nvidia hardware the Free drivers work very well.
+>
+> If in doubt, choose Free drivers. If you want to play games with an Nvidia graphics card, choose non-Free drivers.
+
+|Free |Non-Free|
+|---|---|
+|开源驱动|闭源驱动|
+|AMD显卡|新Nvidia显卡|
+|基于Intel的集显|想用Nvidia显卡打游戏|
+|老的Nvidia显卡||
+|实在不知道怎么选(条件都不满足)||
+
+### 分区大小
+分区可以保护数据文件和系统文件分开, 不至于因为硬盘满了而全部挂掉. 另外, 对于重装系统也很方便.
+[^partitioning]
+关于各文件目录的含义和作用, 可以查阅[Filesystem Hierarchy Standard](https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard)
+
+**/**: 根目录. /usr和/etc一定要和根目录在同一个分区. 而/usr可能随着软件
+**/boot**: 用来存放系统内核,ramdisk,boot loader等. 一般而言不需要单独分区, 除非boot loader并不支持在根目录下访问/boot(比如说文件系统不支持). 假如不是吧ESP挂载到/boot, 那就分配200MiB足以.
+
+swap一般用于当内存不够时, 用来和硬盘交换的; 或者需要休眠时, 存放在硬盘上. 关于swap的大小, 一般推荐RAM size为2GB-8GB的swap设置为同样的大小. 对于需要休眠的情况, Ubuntu推荐要RAM size + sqrt(RAM size), RedHat推荐要2X[^redhat_swap], 而Arch官网说即便swap size小于RAM也是可以成功休眠的[^arch_hibernation]. 众说纷纭, 我选择= RAM size, 根据Arch Linux的推荐.
+[^swap]: <https://opensource.com/article/19/2/swap-space-poll>
+[^redhat_swap]: <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/installation_guide/sect-disk-partitioning-setup-x86#sect-recommended-partitioning-scheme-x86>
+[^arch_hibernation]: <https://wiki.archlinux.org/index.php/Power_management/Suspend_and_hibernate>
+[^arch_swap]: <https://wiki.archlinux.org/index.php/Partitioning#Swap>
+[^partitioning]: <https://wiki.archlinux.org/index.php/Partitioning>
 ### 文件系统选择
 
 
